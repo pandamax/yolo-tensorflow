@@ -9,7 +9,11 @@ class DatasetBase(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def numclasses(self):
+    def numcategories(self):
+        pass
+
+    @abc.abstractmethod
+    def categorynames(self):
         pass
 
 
