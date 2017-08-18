@@ -6,10 +6,16 @@ class DatasetBase(abc.ABC):
 
     @abc.abstractmethod
     def annotationdictfor(self, imagefile):
+        """Retrieve bounding box annotations for an imagefile.
+           Return a dictionary with keys as category names and
+           their annotations as the corresponding values.
+        """
         pass
 
     @abc.abstractmethod
     def numcategories(self):
+        """Return the number of categories in the dataset.
+        """
         pass
 
     @abc.abstractmethod

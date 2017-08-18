@@ -19,7 +19,10 @@ class PascalVOC(DatasetBase):
                       "Train", "Tvmonitor"]
         return categories
 
-    
+    def imagesfromcategory(self, categoryname, **kwargs):
+        assert (categoryname in )
+
+
 
 
 
