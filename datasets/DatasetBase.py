@@ -18,7 +18,7 @@ class DatasetBase(abc.ABC):
         """
         pass
 
-    @abc.abstractmethod
+    @abc.abstractproperty
     def categorynames(self):
         pass
 

@@ -20,7 +20,8 @@ class PascalVOC(DatasetBase):
         return categories
 
     def imagesfromcategory(self, categoryname, **kwargs):
-        assert (categoryname in )
+        assert (categoryname in self.categorynames), "The given category was not found in the dataset {}".format(self.name)
+        
 
 
 
