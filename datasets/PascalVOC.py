@@ -78,24 +78,3 @@ class PascalVOC(DatasetBase):
             annotations[objname].append(append(bbox)
 
         return annotations
-                
-
-
-        
-        
-
-        
-        
-        
-        
-        
-        
-        
-
-
-
-
-
-
-
-
