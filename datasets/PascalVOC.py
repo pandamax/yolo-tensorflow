@@ -2,6 +2,7 @@ import os
 from datasets.DatasetBase import DatasetBase
 import pandas as pd
 from bs4 import BeautifulSoup
+import xml.etree.ElementTree as ET
 
 
 class PascalVOC(DatasetBase):
@@ -50,6 +51,41 @@ class PascalVOC(DatasetBase):
         dataseries = df.iloc[:,0] # Converts from DataFrame to Series
         dataseries.apply(lambda x: x + '.jpg')
         return dataseries
+
+    def annotationdictfor(self, imagefile):
+        fullimagefile = os.path.join(self.__imgpath, imagefile)
+        assert(os.path.exists(fullimagefile)),"The image {} was not found in {}".format(imagefile, self.__imgpath)
+        annotationfile = os.path.splitext(imagefile)[0] + '.xml'
+        annotationfile = os.path.join(self.__annotations, annotationfile)
+        assert(os.path.exists(annotationfile)),"The file {} was not found in {}".format(os.path.basename(annotationfile), self.__annotations)
+        return None
+
+    def readvocxml(self,xmlfilename):
+        annotations = {}
+        soup = BeautifulSoup(contents, 'xml')
+        objects = soup.find_all('object')
+        name = soup.find_all('name')
+        xmin = soup.find_all('xmin')
+        xmax = soup.find_all('xmax')
+        ymin = soup.find_all('ymin')
+        ymax = soup.find_all('ymax')
+        for i in range(len(objects)):
+            bbox = [xmin[i].get_text(), ymin[i].get_text(), xmax.get_text(), ymax.get_text()]
+            bbox = map(int(bbox))
+            objname = name[i].get_text().strip()
+            if objname not in annotations:
+                annotations[objname] = []
+            annotations[objname].append(append(bbox)
+
+        return annotations
+                
+
+
+        
+        
+
+        
+        
         
         
         
