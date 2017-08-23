@@ -2,7 +2,6 @@ import os
 from datasets.DatasetBase import DatasetBase
 import pandas as pd
 from bs4 import BeautifulSoup
-import xml.etree.ElementTree as ET
 
 
 class PascalVOC(DatasetBase):
