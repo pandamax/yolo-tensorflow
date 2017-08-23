@@ -32,6 +32,7 @@ class PascalVOC(DatasetBase):
     def numcategories(self):
         return 20
 
+    @property
     def categorynames(self):
         categories = ["Aeroplane", "Bicycle", "Bird", "Boat", "Bus", "Car",
                       "Cat", "Chair", "Cow", "Dininttable", "Dog", "Horse",
@@ -49,7 +50,7 @@ class PascalVOC(DatasetBase):
         df = pd.read_csv(os.path.join(self.__infopath, categoryfilename), header=None, delimiter=r'\s+')
         df.drop(df.columns[1], axis=1, inplace=True)
         dataseries = df.iloc[:,0] # Converts from DataFrame to Series
-        dataseries.apply(lambda x: x + '.jpg')
+        dataseries = dataseries.apply(lambda x: x + '.jpg')
         return dataseries
 
     def annotationdictfor(self, imagefile):
@@ -58,10 +59,12 @@ class PascalVOC(DatasetBase):
         annotationfile = os.path.splitext(imagefile)[0] + '.xml'
         annotationfile = os.path.join(self.__annotations, annotationfile)
         assert(os.path.exists(annotationfile)),"The file {} was not found in {}".format(os.path.basename(annotationfile), self.__annotations)
-        return None
+        annotationdict = self.readvocxml(annotationfile)
+        return annotationdict
 
     def readvocxml(self,xmlfilename):
         annotations = {}
+        contents = open(xmlfilename, 'r').read()
         soup = BeautifulSoup(contents, 'xml')
         objects = soup.find_all('object')
         name = soup.find_all('name')
@@ -70,11 +73,11 @@ class PascalVOC(DatasetBase):
         ymin = soup.find_all('ymin')
         ymax = soup.find_all('ymax')
         for i in range(len(objects)):
-            bbox = [xmin[i].get_text(), ymin[i].get_text(), xmax.get_text(), ymax.get_text()]
-            bbox = map(int(bbox))
+            bbox = [xmin[i].get_text(), ymin[i].get_text(), xmax[i].get_text(), ymax[i].get_text()]
+            bbox = list(map(int,bbox))
             objname = name[i].get_text().strip()
             if objname not in annotations:
                 annotations[objname] = []
-            annotations[objname].append(append(bbox)
+            annotations[objname].append(bbox)
 
         return annotations
