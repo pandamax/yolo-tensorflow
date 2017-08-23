@@ -39,8 +39,19 @@ class PascalVOC(DatasetBase):
         categories = list(map(lambda x: x.lower(), categories))
         return categories
 
-    def imagesfromcategory(self, categoryname, **kwargs):
+    def imagesfromcategory(self, categoryname, subset="train"):
+        categoryname = categoryname.lower()
         assert (categoryname in self.categorynames), "The given category was not found in the dataset {}".format(self.name)
+        assert(subset is not None),"You must provide subset as train, val or trainval for Pascal VOC 2012"
+        categoryfilename = categoryname + '_' + subset + '.txt'
+
+        df = pd.read_csv(os.path.join(self.__infopath, categoryfilename), header=None, delimiter=r'\s+')
+        df.drop(df.columns[1], axis=1, inplace=True)
+        dataseries = df.iloc[:,0] # Converts from DataFrame to Series
+        dataseries.apply(lambda x: x + '.jpg')
+        return dataseries
+        
+        
         
         
         

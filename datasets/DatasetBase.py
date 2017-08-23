@@ -23,7 +23,7 @@ class DatasetBase(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def imagesfromcategory(self, categoryname, **kwargs):
+    def imagesfromcategory(self, categoryname, subset):
         pass
 
 
