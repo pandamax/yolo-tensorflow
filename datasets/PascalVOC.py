@@ -34,7 +34,7 @@ class PascalVOC(DatasetBase):
     @property
     def categorynames(self):
         categories = ["Aeroplane", "Bicycle", "Bird", "Boat", "Bus", "Car",
-                      "Cat", "Chair", "Cow", "Dininttable", "Dog", "Horse",
+                      "Cat", "Chair", "Cow", "Diningtable", "Dog", "Horse",
                       "Motorbike", "Person", "Pottedplant", "Sheep", "Sofa",
                       "Train", "Tvmonitor"]
         categories = list(map(lambda x: x.lower(), categories))
@@ -47,7 +47,7 @@ class PascalVOC(DatasetBase):
         categoryfilename = categoryname + '_' + subset + '.txt'
 
         df = pd.read_csv(os.path.join(self.__infopath, categoryfilename), header=None, delimiter=r'\s+')
-        df.drop(df.columns[1], axis=1, inplace=True)
+        df = df[df.iloc[:,1] > -1]
         dataseries = df.iloc[:,0] # Converts from DataFrame to Series
         dataseries = dataseries.apply(lambda x: x + '.jpg')
         return dataseries
