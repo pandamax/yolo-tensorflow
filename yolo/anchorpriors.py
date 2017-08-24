@@ -13,5 +13,5 @@ def getbboxes(basepath):
                 for v in value:
                     bboxes += v
         print('Done for the category of {}'.format(category))
-    bboxes = np.reshape(bboxes, (len(bboxes) / 4, 4))
+    bboxes = np.reshape(bboxes, (int(len(bboxes) / 4), 4))
     return bboxes
